@@ -1,1 +1,1 @@
-# projectmagis
+# ProjectMagis
