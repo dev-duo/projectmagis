@@ -1,43 +1,50 @@
 package com.magis.web;
 
+import com.exacttarget.fuelsdk.ETClient;
+import com.exacttarget.fuelsdk.ETConfiguration;
+import com.exacttarget.fuelsdk.ETSdkException;
+
 public class Login {
 
-    public Login(){}
 
-    public Login()
-        throws ETSdkException
-    {
-        private static String clientId = null;
-        private static String clientSecret = null;
-        private static String endpoint = null;
-        private static String authEndpoint = null;
-        private static String soapEndpoint = null;
-        public static String stack = "4";
-        private static ETConfiguration configuration = new ETConfiguration("application.properties");
-        
-        //set username
-        configuration.set("username","");
-        //set password
-        configuration.set("password","");
-        //set client id
-        configuration.set("clientId","");
-        //set client secret
-        configuration.set("clientSecret","");
-        //set soapEndpoint
-        
-        switch (stack) {
-            case 1:  soapEndpoint = configuration.get("s1_soapEndpoint");
-                     break;
-            case 4:  soapEndpoint = configuration.get("s4_soapEndpoint");
-                     break;
-            case 6:  soapEndpoint = configuration.get("s6_soapEndpoint");
-                      break;
-            case 7:  soapEndpoint = configuration.get("s7_soapEndpoint");
-                      break;
+
+    public Login() {
+        try{
+            int stack = 4;
+            String soapEndpoint = "";
+            ETConfiguration configuration = new ETConfiguration("/fuelsdk.properties");
+
+            //set username
+            configuration.set("username","");
+            //set password
+            configuration.set("password","");
+            //set client id
+            configuration.set("clientId","29y2z4p6u51s160uk3z9b4cp");
+            //set client secret
+            configuration.set("clientSecret","Q8AVYav7ICQdl22YyCth3vRj");
+            //set soapEndpoint
+
+            switch (stack) {
+                case 1:  soapEndpoint = configuration.get("s1_soapEndpoint");
+                    break;
+                case 4:  soapEndpoint = configuration.get("s4_soapEndpoint");
+                    break;
+                case 6:  soapEndpoint = configuration.get("s6_soapEndpoint");
+                    break;
+                case 7:  soapEndpoint = configuration.get("s7_soapEndpoint");
+                    break;
+                default: soapEndpoint = "Invalid stack";
+                    break;
+            }
+
+            configuration.set("soapEndpoint",soapEndpoint);
+            ETClient client = new ETClient(configuration);
+
+            System.out.println("Client to String");
+            System.out.println(client.toString());
+        } catch (ETSdkException e){
+            System.out.println(e);
         }
-        
-        configuration.set("soapEndpoint",soapEndpoint);
-        private static ETClient client = new ETClient(configuration);
 
     }
 }
